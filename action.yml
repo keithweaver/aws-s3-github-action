@@ -1,0 +1,28 @@
+name: 'AWS S3 Github Action'
+description: 'This action allows you to use commands similar to AWS S3 CLI.'
+author: 'KeithWeaver'
+branding:
+  icon: 'upload-cloud'
+  color: 'red'
+inputs:
+  command:
+    description: "The command that will be performed. More info: https://docs.aws.amazon.com/cli/latest/reference/s3/#available-commands"
+    required: false
+  source:
+    description: "The file path that the file will be sourced from. This can be either a local file or S3 file. The S3 file should lead with s3://."
+    required: true
+  destination:
+    description: "The file path that the file will be place. This can be either a local file or S3 file. The S3 file should lead with s3://."
+    required: false
+  aws_access_key_id:
+    description: "The AWS access key part of your credentials. More info: https://docs.aws.amazon.com/cli/latest/reference/configure/"
+    required: false
+  aws_secret_access_key:
+    description: "The AWS access key part of your credentials. More info: https://docs.aws.amazon.com/cli/latest/reference/configure/"
+    required: false
+  aws_session_token:
+    description: "The AWS access key part of your credentials. More info: https://docs.aws.amazon.com/cli/latest/reference/configure/"
+    required: false
+  metadata_service_timeout:
+    description: "The number of seconds to wait until the metadata service request times out. More info: https://docs.aws.amazon.com/cli/latest/reference/configure/"
+    required: false
