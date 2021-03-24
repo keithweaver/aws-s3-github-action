@@ -8,8 +8,8 @@ Upload, download, or list files/folders through Github Actions.
     command: cp
     source: ./local_file.txt
     destination: s3://yourbucket/folder/local_file.txt
-    aws_access_key_id: ${{ secret.AWS_ACCESS_KEY_ID }}
-    aws_secret_access_key: ${{ secret.AWS_SECRET_ACCESS_KEY }}
+    aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 ```
 
 **Inputs**
