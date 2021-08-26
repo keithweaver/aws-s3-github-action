@@ -1,4 +1,4 @@
-
+#!/bin/sh
 
 function usage_docs {
   echo ""
@@ -116,8 +116,10 @@ function main {
   validate_source_and_destination
   if [[ "$COMMAND" == "cp" || "$COMMAND" == "mv" || "$COMMAND" == "sync" ]]
   then
+    echo aws s3 $COMMAND "$INPUT_SOURCE" "$INPUT_DESTINATION" $INPUT_FLAGS
     aws s3 $COMMAND "$INPUT_SOURCE" "$INPUT_DESTINATION" $INPUT_FLAGS
   else
+    echo aws s3 $COMMAND "$INPUT_SOURCE" $INPUT_FLAGS
     aws s3 $COMMAND "$INPUT_SOURCE" $INPUT_FLAGS
   fi
 }
