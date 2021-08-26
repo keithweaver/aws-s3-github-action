@@ -114,6 +114,9 @@ function main {
   get_configuration_settings
   get_command
   validate_source_and_destination
+  
+  aws --version
+  
   if [[ "$COMMAND" == "cp" || "$COMMAND" == "mv" || "$COMMAND" == "sync" ]]
   then
     echo aws s3 $COMMAND "$INPUT_SOURCE" "$INPUT_DESTINATION" $INPUT_FLAGS
