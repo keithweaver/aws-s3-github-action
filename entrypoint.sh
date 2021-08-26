@@ -1,3 +1,5 @@
+
+
 function usage_docs {
   echo ""
   echo "- uses: keithweaver/aws-s3-github-action@master"
@@ -66,10 +68,10 @@ function get_command {
     COMMAND=$INPUT_COMMAND
   fi
 }
-function validate_target_and_destination {
-  if [ "$COMMAND" == "cp" || "$COMMAND" == "mv" || "$COMMAND" == "sync" ]
+function validate_source_and_destination {
+  if [[ "$COMMAND" == "cp" || "$COMMAND" == "mv" || "$COMMAND" == "sync" ]]
   then
-    # Require source and target
+    # Require source and destination
     if [ -z "$INPUT_SOURCE" && "$INPUT_DESTINATION" ]
     then
       echo ""
@@ -109,8 +111,8 @@ function main {
   get_profile
   get_configuration_settings
   get_command
-  validate_target_and_destination
-  if [ "$COMMAND" == "cp" || "$COMMAND" == "mv" || "$COMMAND" == "sync" ]
+  validate_source_and_destination
+  if [[ "$COMMAND" == "cp" || "$COMMAND" == "mv" || "$COMMAND" == "sync" ]]
   then
     "aws s3 $COMMAND $INPUT_SOURCE $INPUT_DESTINATION $INPUT_FLAGS"
   else
