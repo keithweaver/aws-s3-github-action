@@ -15,6 +15,8 @@ function get_profile {
   PROFILE=""
   if [ -z "$INPUT_PROFILE" ]
   then
+    echo "Using the default profile"
+  else
     echo "Using the profile :: [$INPUT_PROFILE]"
     PROFILE=" --profile=$INPUT_PROFILE"
   fi
