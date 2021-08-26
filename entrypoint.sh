@@ -82,7 +82,7 @@ function validate_source_and_destination {
 
     # Verify at least one source or target have s3:// as prefix
     # if [[] || []]
-    if [[ $INPUT_SOURCE != *"s3://"* ] || [ $INPUT_DESTINATION != *"s3://"* ]]
+    if [[ $INPUT_SOURCE != *"s3://"* ]] && [[ $INPUT_DESTINATION != *"s3://"* ]]
     then
       echo ""
       echo "Error: Source destination or target destination must have s3:// as prefix."
