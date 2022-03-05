@@ -106,6 +106,7 @@ function main {
   validate_source_and_destination
 
   aws --version
+  ls
 
   if [ "$COMMAND" == "cp" ] || [ "$COMMAND" == "mv" ] || [ "$COMMAND" == "sync" ]
   then
