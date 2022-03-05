@@ -112,6 +112,12 @@ function main {
   aws --version
   ls
 
+  touch test.txt
+  echo "Verifying cp works" >> test.txt
+  aws s3 cp ./test.txt s3://keithweaverca-public-us-east-1/test1.txt
+  aws s3 "$COMMAND" ./test.txt s3://keithweaverca-public-us-east-1/test2.txt
+
+
   if [ "$COMMAND" == "cp" ] || [ "$COMMAND" == "mv" ] || [ "$COMMAND" == "sync" ]
   then
     echo aws s3 $COMMAND "$INPUT_SOURCE" "$INPUT_DESTINATION" $INPUT_FLAGS
