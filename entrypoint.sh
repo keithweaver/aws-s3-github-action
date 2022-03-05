@@ -1,3 +1,5 @@
+#!/bin/sh
+
 function usage_docs {
   echo ""
   echo "- uses: keithweaver/aws-s3-github-action@master"
@@ -13,6 +15,8 @@ function get_profile {
   PROFILE=""
   if [ -z "$INPUT_PROFILE" ]
   then
+    echo "Using the default profile"
+  else
     echo "Using the profile :: [$INPUT_PROFILE]"
     PROFILE=" --profile=$INPUT_PROFILE"
   fi
@@ -66,21 +70,21 @@ function get_command {
     COMMAND=$INPUT_COMMAND
   fi
 }
-function validate_target_and_destination {
-  if [ "$COMMAND" == "cp" || "$COMMAND" == "mv" || "$COMMAND" == "sync" ]
+function validate_source_and_destination {
+  if [[ "$COMMAND" == "cp" || "$COMMAND" == "mv" || "$COMMAND" == "sync" ]]
   then
-    # Require source and target
-    if [ -z "$INPUT_SOURCE" && "$INPUT_TARGET" ]
+    # Require source and destination
+    if [[ -z "$INPUT_SOURCE" && "$INPUT_DESTINATION" ]]
     then
       echo ""
-      echo "Error: Requires source and target destinations."
+      echo "Error: Requires source and destination."
       usage_docs
       exit 1
     fi
 
     # Verify at least one source or target have s3:// as prefix
     # if [[] || []]
-    if [ $INPUT_SOURCE != *"s3://"* ] || [ $INPUT_TARGET != *"s3://"* ]
+    if [[ $INPUT_SOURCE != *"s3://"* ]] && [[ $INPUT_DESTINATION != *"s3://"* ]]
     then
       echo ""
       echo "Error: Source destination or target destination must have s3:// as prefix."
@@ -109,12 +113,17 @@ function main {
   get_profile
   get_configuration_settings
   get_command
-  validate_target_and_destination
-  if [ "$COMMAND" == "cp" || "$COMMAND" == "mv" || "$COMMAND" == "sync" ]
+  validate_source_and_destination
+  
+  aws --version
+  
+  if [[ "$COMMAND" == "cp" || "$COMMAND" == "mv" || "$COMMAND" == "sync" ]]
   then
-    "aws s3 $command $INPUT_SOURCE $INPUT_TARGET $INPUT_FLAGS"
+    echo aws s3 $COMMAND "$INPUT_SOURCE" "$INPUT_DESTINATION" $INPUT_FLAGS
+    aws s3 $COMMAND "$INPUT_SOURCE" "$INPUT_DESTINATION" $INPUT_FLAGS
   else
-    "aws s3 $command $INPUT_SOURCE $INPUT_FLAGS"
+    echo aws s3 $COMMAND "$INPUT_SOURCE" $INPUT_FLAGS
+    aws s3 $COMMAND "$INPUT_SOURCE" $INPUT_FLAGS
   fi
 }
 
