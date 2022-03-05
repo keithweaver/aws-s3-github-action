@@ -100,13 +100,16 @@ function validate_source_and_destination {
   fi
 }
 function main {
+  echo "v1.0.0"
   get_configuration_settings
   get_command
   validate_source_and_destination
   if [ "$COMMAND" == "cp" ] || [ "$COMMAND" == "mv" ] || [ "$COMMAND" == "sync" ]
   then
+    echo aws s3 $COMMAND "$INPUT_SOURCE" "$INPUT_DESTINATION" $INPUT_FLAGS
     aws s3 "$COMMAND" "$INPUT_SOURCE" "$INPUT_DESTINATION"
   else
+    echo aws s3 $COMMAND "$INPUT_SOURCE" $INPUT_FLAGS
     aws s3 "$COMMAND" "$INPUT_SOURCE"
   fi
 }
