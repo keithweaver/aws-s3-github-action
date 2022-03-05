@@ -23,3 +23,17 @@ Upload, download, or list files/folders through Github Actions.
 | `aws_secret_access_key` | Optional   | N/A | This is the credentials from an IAM role for getting access to a bucket. [More info](https://docs.aws.amazon.com/cli/latest/reference/configure/) |
 | `aws_session_token` | Optional   | N/A | This is the credentials from an IAM role for getting access to a bucket. [More info](https://docs.aws.amazon.com/cli/latest/reference/configure/) |
 | `metadata_service_timeout` | Optional   | N/A | The number of seconds to wait until the metadata service request times out. [More info](https://docs.aws.amazon.com/cli/latest/reference/configure/) |
+
+## Running
+
+**Where can I see this run in a pipeline as an example?**
+
+TODO
+
+**Can I test this local outside of docker?**
+
+You can run a bash script
+
+```
+TODO
+```

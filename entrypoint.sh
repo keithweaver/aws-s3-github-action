@@ -50,13 +50,17 @@ function get_configuration_settings {
 function get_command {
   VALID_COMMANDS=("sync" "mb" "rb" "ls" "cp" "mv" "rm")
   COMMAND="cp"
-  if [[ ! ${VALID_COMMANDS[*]} =~ "$INPUT_COMMAND" ]]
+  if [ -z "$INPUT_COMMAND" ]
+  then
+    echo "Command not set using cp"
+  elif [ ! ${VALID_COMMANDS[*]} =~ "$INPUT_COMMAND" ]]
   then
     echo ""
     echo "Invalid command provided :: [$INPUT_COMMAND]"
     usage_docs
     exit 1
   else
+    echo "Using provided command"
     COMMAND=$INPUT_COMMAND
   fi
 }
