@@ -10,6 +10,7 @@ Upload, download, or list files/folders through Github Actions.
     destination: s3://yourbucket/folder/local_file.txt
     aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
     aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    aws_region: us-east-1
 ```
 
 **Inputs**
@@ -22,7 +23,9 @@ Upload, download, or list files/folders through Github Actions.
 | `aws_access_key_id` | Optional   | N/A | This is the credentials from an IAM role for getting access to a bucket. [More info](https://docs.aws.amazon.com/cli/latest/reference/configure/) |
 | `aws_secret_access_key` | Optional   | N/A | This is the credentials from an IAM role for getting access to a bucket. [More info](https://docs.aws.amazon.com/cli/latest/reference/configure/) |
 | `aws_session_token` | Optional   | N/A | This is the credentials from an IAM role for getting access to a bucket. [More info](https://docs.aws.amazon.com/cli/latest/reference/configure/) |
+| `aws_region`        | Optional | N/A | This is the region of the bucket. S3 namespace is global but the bucket is regional. |
 | `metadata_service_timeout` | Optional   | N/A | The number of seconds to wait until the metadata service request times out. [More info](https://docs.aws.amazon.com/cli/latest/reference/configure/) |
+| `flags`        | Optional | N/A | Additional query flags.  |
 
 ## FAQs
 

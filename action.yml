@@ -26,6 +26,12 @@ inputs:
   aws_session_token:
     description: "The AWS access key part of your credentials. More info: https://docs.aws.amazon.com/cli/latest/reference/configure/"
     required: false
+  aws_region:
+    description: "This is the region of the bucket. S3 namespace is global but the bucket is regional."
+    required: false
   metadata_service_timeout:
     description: "The number of seconds to wait until the metadata service request times out. More info: https://docs.aws.amazon.com/cli/latest/reference/configure/"
+    required: false
+  flags:
+    description: "Additional query flags."
     required: false
