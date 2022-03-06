@@ -94,3 +94,20 @@ Solution is [here](https://github.com/aws/aws-cli/issues/602#issuecomment-603877
 **botocore.utils.BadIMDSRequestError**
 
 [Here](https://stackoverflow.com/questions/68348222/aws-s3-ls-gives-error-botocore-utils-badimdsrequesterror-botocore-awsrequest-a) is the solution. We set the AWS region as a required argument as a result.
+
+**upload failed: folder1/ to s3://.../folder1/ [Errno 21] Is a directory: '/github/workspace/folder1/'**
+
+You need to a recursive flag for the `cp`. Looks like:
+
+```
+- uses: keithweaver/aws-s3-github-action@v1.0.0
+  name: Copy Folder
+  with:
+    command: cp
+    source: ./folder1/
+    destination: s3://bucket/folder1/
+    aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    aws_region: us-east-1
+    flags: --recursive
+```
