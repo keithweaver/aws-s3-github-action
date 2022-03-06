@@ -65,3 +65,7 @@ TODO
 **An error occurred (SignatureDoesNotMatch) when calling the PutObject operation: The request signature we calculated does not match the signature you provided. Check your key and signing method.**
 
 Solution is [here](https://github.com/aws/aws-cli/issues/602#issuecomment-60387771). [More info](https://stackoverflow.com/questions/4770635/s3-error-the-difference-between-the-request-time-and-the-current-time-is-too-la), [more](https://forums.docker.com/t/syncing-clock-with-host/10432/6).
+
+**botocore.utils.BadIMDSRequestError**
+
+[Here](https://stackoverflow.com/questions/68348222/aws-s3-ls-gives-error-botocore-utils-badimdsrequesterror-botocore-awsrequest-a) is the solution. We set the AWS region as a required argument as a result.

@@ -117,6 +117,7 @@ function main {
 
   touch test.txt
   echo "Verifying cp works" >> test.txt
+  pwd
   ls
   cat test.txt
   aws s3 cp ./test.txt s3://keithweaverca-public-us-east-1/test1.txt --debug
