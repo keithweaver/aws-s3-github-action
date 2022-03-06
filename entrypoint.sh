@@ -39,11 +39,11 @@ function get_configuration_settings {
   else
     aws configure set metadata_service_timeout "$INPUT_METADATA_SERVICE_TIMEOUT"
   fi
-
+  echo "INPUT_AWS_REGION :: [$INPUT_AWS_REGION]" # TODO - Debugging
   if [ -z "$INPUT_AWS_REGION" ]
   then
     echo "AWS region not found."
-    # TODO - Fail
+    # TODO - Fail here instead
   else
     aws configure set region "$INPUT_AWS_REGION"
   fi
