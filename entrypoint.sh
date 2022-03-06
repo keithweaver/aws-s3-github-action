@@ -104,7 +104,7 @@ function validate_source_and_destination {
   fi
 }
 function main {
-  echo "v1.0.0"
+  echo "v1.0.1"
   get_configuration_settings
   get_command
   validate_source_and_destination
