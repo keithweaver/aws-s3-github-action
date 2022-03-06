@@ -110,7 +110,9 @@ function main {
   validate_source_and_destination
 
   aws --version
-  ls
+  echo "listing content"
+  ls /
+  echo "Done content"
 
   touch test.txt
   echo "Verifying cp works" >> test.txt

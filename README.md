@@ -30,10 +30,34 @@ Upload, download, or list files/folders through Github Actions.
 
 TODO
 
-**Can I test this local outside of docker?**
+**Can I run this local with Docker?**
+
+```
+# You should have Docker on your local and running.
+docker build . -t aws-s3-action
+docker run \
+  --env INPUT_AWS_ACCESS_KEY_ID="<ACCESS_KEY>" \
+  --env INPUT_AWS_SECRET_ACCESS_KEY="<ACCESS_SECRET>" \
+  --env INPUT_SOURCE="./sample.txt" \
+  --env INPUT_DESTINATION="s3://yourbucket/sample.txt" \
+  aws-s3-action
+# Docker image must follow the environment variables or they will not set.
+```
+
+**Can I run this local outside of Docker?**
 
 You can run a bash script
 
 ```
-TODO
+INPUT_AWS_ACCESS_KEY_ID="<ACCESS_KEY>" \
+  INPUT_AWS_SECRET_ACCESS_KEY="<ACCESS_SECRET>" \
+  INPUT_SOURCE="./sample.txt" \
+  INPUT_DESTINATION="s3://yourbucket/sample.txt" \
+  bash entrypoint.sh
 ```
+
+## Errors
+
+**An error occurred (SignatureDoesNotMatch) when calling the PutObject operation: The request signature we calculated does not match the signature you provided. Check your key and signing method.**
+
+Solution is [here](https://github.com/aws/aws-cli/issues/602#issuecomment-60387771). [More info](https://stackoverflow.com/questions/4770635/s3-error-the-difference-between-the-request-time-and-the-current-time-is-too-la), [more](https://forums.docker.com/t/syncing-clock-with-host/10432/6).
