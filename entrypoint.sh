@@ -43,6 +43,7 @@ function get_configuration_settings {
   if [ -z "$INPUT_AWS_REGION" ]
   then
     echo "AWS region not found."
+    # TODO - Fail
   else
     aws configure set region "$INPUT_AWS_REGION"
   fi
