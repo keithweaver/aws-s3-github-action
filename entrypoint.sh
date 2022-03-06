@@ -54,7 +54,7 @@ function get_command {
   if [ -z "$INPUT_COMMAND" ]
   then
     echo "Command not set using cp"
-  elif [ ! ${VALID_COMMANDS[*]} =~ "$INPUT_COMMAND" ]]
+  elif [ ! ${VALID_COMMANDS[*]} =~ "$INPUT_COMMAND" ]
   then
     echo ""
     echo "Invalid command provided :: [$INPUT_COMMAND]"
