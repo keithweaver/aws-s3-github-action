@@ -2,7 +2,7 @@
 
 function usage_docs {
   echo ""
-  echo "- uses: keithweaver/aws-s3-github-action@master"
+  echo "- uses: keithweaver/aws-s3-github-action@v1.0.0"
   echo "  with:"
   echo "    command: cp"
   echo "    source: ./local_file.txt"
@@ -39,7 +39,7 @@ function get_configuration_settings {
   else
     aws configure set metadata_service_timeout "$INPUT_METADATA_SERVICE_TIMEOUT"
   fi
-  echo "INPUT_AWS_REGION :: [$INPUT_AWS_REGION]" # TODO - Debugging
+
   if [ -z "$INPUT_AWS_REGION" ]
   then
     echo "AWS region not found. Using configuration from previous step."
