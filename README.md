@@ -56,6 +56,10 @@ INPUT_AWS_ACCESS_KEY_ID="<ACCESS_KEY>" \
   bash entrypoint.sh
 ```
 
+**How can I test a feature branch?**
+
+TODO
+
 ## Errors
 
 **An error occurred (SignatureDoesNotMatch) when calling the PutObject operation: The request signature we calculated does not match the signature you provided. Check your key and signing method.**

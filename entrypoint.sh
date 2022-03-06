@@ -116,8 +116,10 @@ function main {
 
   touch test.txt
   echo "Verifying cp works" >> test.txt
-  aws s3 cp ./test.txt s3://keithweaverca-public-us-east-1/test1.txt
-  aws s3 "$COMMAND" ./test.txt s3://keithweaverca-public-us-east-1/test2.txt
+  ls
+  cat test.txt
+  aws s3 cp ./test.txt s3://keithweaverca-public-us-east-1/test1.txt --debug
+  aws s3 "$COMMAND" ./test.txt s3://keithweaverca-public-us-east-1/test2.txt  --debug
 
 
   if [ "$COMMAND" == "cp" ] || [ "$COMMAND" == "mv" ] || [ "$COMMAND" == "sync" ]
