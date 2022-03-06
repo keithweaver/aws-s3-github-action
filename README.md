@@ -3,7 +3,7 @@
 Upload, download, or list files/folders through Github Actions.
 
 ```
-- uses: keithweaver/aws-s3-github-action@master
+- uses: keithweaver/aws-s3-github-action@v1.0.0
   with:
     command: cp
     source: ./local_file.txt
@@ -24,11 +24,35 @@ Upload, download, or list files/folders through Github Actions.
 | `aws_session_token` | Optional   | N/A | This is the credentials from an IAM role for getting access to a bucket. [More info](https://docs.aws.amazon.com/cli/latest/reference/configure/) |
 | `metadata_service_timeout` | Optional   | N/A | The number of seconds to wait until the metadata service request times out. [More info](https://docs.aws.amazon.com/cli/latest/reference/configure/) |
 
-## Running
+## FAQs
 
 **Where can I see this run in a pipeline as an example?**
 
 TODO
+
+**How can I use a specific version or test a feature branch?**
+
+You are specifying the tag or branch by using the `@` after the Action name. Below, it uses `v1.0.0` which is based on the tag.
+
+```
+- uses: keithweaver/aws-s3-github-action@v1.0.0
+  ...
+```
+
+This uses the master branch:
+
+```
+- uses: keithweaver/aws-s3-github-action@master
+```
+
+This uses a feature branch called `dev-branch`:
+
+```
+- uses: keithweaver/aws-s3-github-action@dev-branch
+```
+
+It is recommended that you point to a specific version to avoid unexpected changes affecting your workflow.
+
 
 **Can I run this local with Docker?**
 
@@ -56,11 +80,12 @@ INPUT_AWS_ACCESS_KEY_ID="<ACCESS_KEY>" \
   bash entrypoint.sh
 ```
 
-**How can I test a feature branch?**
-
-TODO
 
 ## Errors
+
+**upload failed: ./test1.txt to s3://.../test1.txt Unable to locate credentials**
+
+You didn't set credentials correctly. Common reason; forgot to set the Github Secrets.
 
 **An error occurred (SignatureDoesNotMatch) when calling the PutObject operation: The request signature we calculated does not match the signature you provided. Check your key and signing method.**
 

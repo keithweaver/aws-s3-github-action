@@ -42,8 +42,7 @@ function get_configuration_settings {
   echo "INPUT_AWS_REGION :: [$INPUT_AWS_REGION]" # TODO - Debugging
   if [ -z "$INPUT_AWS_REGION" ]
   then
-    echo "AWS region not found."
-    # TODO - Fail here instead
+    echo "AWS region not found. Using configuration from previous step."
   else
     aws configure set region "$INPUT_AWS_REGION"
   fi
@@ -105,24 +104,12 @@ function validate_source_and_destination {
   fi
 }
 function main {
-  echo "v1.0.1"
+  echo "v1.0.0"
   get_configuration_settings
   get_command
   validate_source_and_destination
 
   aws --version
-  echo "listing content"
-  ls /
-  echo "Done content"
-
-  touch test.txt
-  echo "Verifying cp works" >> test.txt
-  pwd
-  ls
-  cat test.txt
-  aws s3 cp ./test.txt s3://keithweaverca-public-us-east-1/test1.txt --debug
-  aws s3 "$COMMAND" ./test.txt s3://keithweaverca-public-us-east-1/test2.txt  --debug
-
 
   if [ "$COMMAND" == "cp" ] || [ "$COMMAND" == "mv" ] || [ "$COMMAND" == "sync" ]
   then
