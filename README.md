@@ -28,7 +28,7 @@ Upload, download, or list files/folders through Github Actions.
 
 **Where can I see this run in a pipeline as an example?**
 
-TODO
+[Here](https://github.com/keithweaver/aws-s3-github-action-demo) is the test/verification pipeline that is used.
 
 **How can I use a specific version or test a feature branch?**
 
@@ -111,3 +111,12 @@ You need to a recursive flag for the `cp`. Looks like:
     aws_region: us-east-1
     flags: --recursive
 ```
+
+**An error occurred (AccessDenied) when calling the ListObjectsV2 operation: Access Denied**
+
+[Solution](https://aws.amazon.com/premiumsupport/knowledge-center/s3-access-denied-listobjects-sync/).
+
+
+**fatal error: An error occurred (404) when calling the HeadObject operation: Key "verify-aws-s3-action/folder1/" does not exist**
+
+You need to add a recursive flag, `flags: --recursive`.
