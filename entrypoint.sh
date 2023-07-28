@@ -2,7 +2,7 @@
 
 function usage_docs {
   echo ""
-  echo "- uses: keithweaver/aws-s3-github-action@v1.0.0"
+  echo "- uses: pipedrive/aws-s3-github-action@master"
   echo "  with:"
   echo "    command: cp"
   echo "    source: ./local_file.txt"
