@@ -1,50 +1,50 @@
 name: Build & push image workflow
 on:
-    push:
-        branches:
-            - master
+  push:
+    branches:
+      - master
 
-    workflow_dispatch:
-        inputs:
-            ref:
-                description: Reference to build image from. `master` will push the `latest` tag.
-                type: string
-                required: false
-                default: master
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Reference to build image from. `master` will push the `latest` tag.
+        type: string
+        required: false
+        default: master
 env:
-    REGISTRY: ghcr.io     # Using GH Packages for hosting public images
-    IMAGE_NAME: ${{ github.repository }}
-    LATEST: ${{ inputs == null && github.ref_name == 'master' || inputs.ref == 'master' }}
+  REGISTRY: ghcr.io # Using GH Packages for hosting public images
+  IMAGE_NAME: ${{ github.repository }}
+  LATEST: ${{ github.ref_name == 'master' || (inputs && inputs.ref == 'master') }}
 
 jobs:
-    build-push-image:
-        name: Build & push image
-        runs-on: ubuntu-latest
-        timeout-minutes: 10
-        steps:
-            - name: Checkout ${{ github.repository }}
-              uses: actions/checkout@v3
+  build-push-image:
+    name: Build & push image
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout ${{ github.repository }}
+        uses: actions/checkout@v3
 
-            - name: Log in to the Container registry
-              uses: docker/login-action@v2
-              with:
-                registry: ${{ env.REGISTRY }}
-                username: ${{ github.actor }}
-                password: ${{ secrets.GITHUB_TOKEN }}
-      
-            - name: Extract metadata (tags, labels) for Docker
-              id: meta
-              uses: docker/metadata-action@v4
-              with:
-                images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-                tags: |
-                    type=sha,enable=true,priority=100,prefix=,suffix=_${{ github.run_number }},format=short
-                    type=raw,value=latest,enable=${{env.LATEST}}
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: Build and push Docker image
-              uses: docker/build-push-action@v3.3.0
-              with:
-                context: .
-                push: true
-                tags: ${{ steps.meta.outputs.tags }}
-                labels: ${{ steps.meta.outputs.labels }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=sha,enable=true,priority=100,prefix=,suffix=_${{ github.run_number }},format=short
+            type=raw,value=latest,enable=${{env.LATEST}}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3.3.0
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
