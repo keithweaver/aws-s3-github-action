@@ -5,8 +5,11 @@ function usage_docs {
   echo "- uses: pipedrive/aws-s3-github-action@master"
   echo "  with:"
   echo "    command: cp"
-  echo "    source: ./local_file.txt"
-  echo "    destination: s3://yourbucket/folder/local_file.txt"
+  echo "    source: >"  # Use '>' to start a multiline string
+  echo "      ./local_file.txt"
+  echo "      ./another_local_file.txt"
+  echo "      ./yet_another_local_file.txt"
+  echo "    destination: s3://yourbucket/folder/"
   echo "    aws_access_key_id: \${{ secret.AWS_ACCESS_KEY_ID }}"
   echo "    aws_secret_access_key: \${{ secret.AWS_SECRET_ACCESS_KEY }}"
   echo ""
@@ -111,14 +114,22 @@ function main {
 
   aws --version
 
-  if [ "$COMMAND" == "cp" ] || [ "$COMMAND" == "mv" ] || [ "$COMMAND" == "sync" ]
-  then
-    echo aws s3 $COMMAND "$INPUT_SOURCE" "$INPUT_DESTINATION" $INPUT_FLAGS
-    aws s3 "$COMMAND" "$INPUT_SOURCE" "$INPUT_DESTINATION" $INPUT_FLAGS
-  else
-    echo aws s3 $COMMAND "$INPUT_SOURCE" $INPUT_FLAGS
-    aws s3 "$COMMAND" "$INPUT_SOURCE" $INPUT_FLAGS
-  fi
+  IFS=$'\n' # Set the Internal Field Separator to newline
+
+  # Split the multiline input into an array
+  read -ra SOURCE_ARRAY <<< "$INPUT_SOURCE"
+
+
+  for source in "${SOURCE_ARRAY[@]}"; do
+    if [ "$COMMAND" == "cp" ] || [ "$COMMAND" == "mv" ] || [ "$COMMAND" == "sync" ]
+    then
+      echo "aws s3 $COMMAND \"$source\" $INPUT_DESTINATION $INPUT_FLAGS"
+      aws s3 "$COMMAND" "$source" "$INPUT_DESTINATION" $INPUT_FLAGS
+    else
+      echo "aws s3 $COMMAND \"$source\" $INPUT_FLAGS"
+      aws s3 "$COMMAND" "$source" $INPUT_FLAGS
+    fi
+  done
 }
 
 main
