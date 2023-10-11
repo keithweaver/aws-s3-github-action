@@ -1,6 +1,6 @@
 #!/bin/sh
 
-function usage_docs {
+usage_docs() {
   echo ""
   echo "- uses: pipedrive/aws-s3-github-action@master"
   echo "  with:"
@@ -14,7 +14,7 @@ function usage_docs {
   echo "    aws_secret_access_key: \${{ secret.AWS_SECRET_ACCESS_KEY }}"
   echo ""
 }
-function get_configuration_settings {
+get_configuration_settings() {
   if [ -z "$INPUT_AWS_ACCESS_KEY_ID" ]
   then
     echo "AWS Access Key Id was not found. Using configuration from previous step."
@@ -50,7 +50,7 @@ function get_configuration_settings {
     aws configure set region "$INPUT_AWS_REGION"
   fi
 }
-function get_command {
+get_command() {
   VALID_COMMANDS=("sync" "mb" "rb" "ls" "cp" "mv" "rm")
   COMMAND="cp"
   if [ -z "$INPUT_COMMAND" ]
@@ -67,7 +67,7 @@ function get_command {
     COMMAND=$INPUT_COMMAND
   fi
 }
-function validate_source_and_destination {
+validate_source_and_destination() {
   if [ "$COMMAND" == "cp" ] || [ "$COMMAND" == "mv" ] || [ "$COMMAND" == "sync" ]
   then
     # Require source and target
@@ -106,7 +106,7 @@ function validate_source_and_destination {
     fi
   fi
 }
-function main {
+main() {
   echo "v1.0.0"
   get_configuration_settings
   get_command
@@ -114,22 +114,17 @@ function main {
 
   aws --version
 
-  IFS=$'\n' # Set the Internal Field Separator to newline
-
-  # Split the multiline input into an array
-  read -ra SOURCE_ARRAY <<< "$INPUT_SOURCE"
-
-
-  for source in "${SOURCE_ARRAY[@]}"; do
+  # Iterate over $INPUT_SOURCE multiline string and run aws s3 $COMMAND
+  while IFS= read -r source; do
     if [ "$COMMAND" == "cp" ] || [ "$COMMAND" == "mv" ] || [ "$COMMAND" == "sync" ]
     then
       echo "aws s3 $COMMAND \"$source\" $INPUT_DESTINATION $INPUT_FLAGS"
-      aws s3 "$COMMAND" "$source" "$INPUT_DESTINATION" $INPUT_FLAGS
+      aws s3 "$COMMAND" "$source" "$INPUT_DESTINATION" "$INPUT_FLAGS"
     else
       echo "aws s3 $COMMAND \"$source\" $INPUT_FLAGS"
-      aws s3 "$COMMAND" "$source" $INPUT_FLAGS
+      aws s3 "$COMMAND" "$source" "$INPUT_FLAGS"
     fi
-  done
+  done <<< "$INPUT_SOURCE"
 }
 
 main
