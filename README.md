@@ -6,7 +6,9 @@ Upload, download, or list files/folders through Github Actions.
 - uses: pipedrive/aws-s3-github-action@master
   with:
     command: cp
-    source: ./local_file.txt
+    source: |
+      ./local_file.txt
+      ./local_file2.txt
     destination: s3://yourbucket/folder/local_file.txt
     aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
     aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
